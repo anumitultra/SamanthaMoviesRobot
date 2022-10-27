@@ -80,19 +80,25 @@ async def next_page(bot, query):
     if not search:
         await query.answer("You are using this for one of my old message, please send the request again.",show_alert=True)
         return
-    btn=[]
+ btn = [
+            [
+                InlineKeyboardButton(
+                    text=f"{file.file_name}", url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
+                ),
+                InlineKeyboardButton(
+                    text=f"{get_size(file.file_size)}",
+                    url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
+                ),
+            ]
+            for file in files
+        ]
 
-    files, n_offset, total = await get_search_results(search, offset=offset, filter=True)
-    try:
-        n_offset = int(n_offset)
-    except:
-        n_offset = 0
-    if files:
-        for file in files:
-            file_id = file.file_id
-            btn.append(
-                [InlineKeyboardButton(text=f"{file.file_name}", callback_data=f'files#{file_id}'), InlineKeyboardButton(text=f"{get_size(file.file_size)}", callback_data=f'files_#{file_id}')]
-                )
+    btn.insert(0,
+        [
+            InlineKeyboardButton(text=DOWNLOAD_TEXT_NAME,url=DOWNLOAD_TEXT_URL)
+        ]
+    )
+
     if 0 < offset <= 10:
         off_set = 0
     elif offset == 0:
@@ -538,7 +544,8 @@ async def auto_filter(client, message):
             for file in files:
                 file_id = file.file_id
                 btn.append(
-                    [InlineKeyboardButton(text=f"{file.file_name}", callback_data=f'files#{file_id}'), InlineKeyboardButton(text=f"{get_size(file.file_size)}", callback_data=f'files_#{file_id}')]
+                    [InlineKeyboardButton(
+                    text=f"[{get_size(file.file_size)}] {file.file_name}", url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://telegram.me/{temp.U_NAME}?start={pre}_{file.file_id}')]
                     )
         if not btn:
             return
