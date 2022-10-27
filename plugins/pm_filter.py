@@ -546,7 +546,7 @@ async def auto_filter(client, message):
                 file_id = file.file_id
                 btn.append(
                     [InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}] {file.file_name}", url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://telegram.me/{temp.U_NAME}?start={pre}_{file.file_id}')]
+                    text=f"[{get_size(file.file_size)}] {file.file_name}", url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}')]
                     )
         if not btn:
             return
