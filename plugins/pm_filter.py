@@ -80,7 +80,7 @@ async def next_page(bot, query):
     if not search:
         await query.answer("You are using this for one of my old message, please send the request again.",show_alert=True)
         return
- btn = [
+        btn = [
             [
                 InlineKeyboardButton(
                     text=f"{file.file_name}", url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
@@ -91,7 +91,8 @@ async def next_page(bot, query):
                 ),
             ]
             for file in files
-       ]
+        ]
+
 
     btn.insert(0,
         [
