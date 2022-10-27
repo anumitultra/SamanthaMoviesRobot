@@ -91,7 +91,7 @@ async def next_page(bot, query):
                 ),
             ]
             for file in files
-        ]
+       ]
 
     btn.insert(0,
         [
