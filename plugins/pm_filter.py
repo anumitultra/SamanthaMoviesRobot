@@ -535,17 +535,45 @@ async def auto_filter(client, message):
     if re.findall("((^\/|^,|^!|^\.|^[\U0001F600-\U000E007F]).*)", message.text):
         return
     if 2 < len(message.text) < 100:    
-        btn = []
-        search = message.text
-        files, offset, total_results = await get_search_results(search.lower(), offset=0)
-        if files:
-            for file in files:
-                file_id = file.file_id
-                btn.append(
-                    [InlineKeyboardButton(
-                     text=f"{file.file_name}",
+         btn = [
+            [
+                InlineKeyboardButton(
+                    text=f"[{get_size(file.file_size)}] {file.file_name}", 
                     url=await get_shortlink(f"https://t.me/{temp.U_NAME}?start=pre_{file.file_id}")
                 ),
+            ]
+            for file in files
+        ]
+    else:
+        btn = [
+            [
+                InlineKeyboardButton(
+                    text=f"{file.file_name}",
+                    url=await get_shortlink(f"https://t.me/{temp.U_NAME}?start=pre_{file.file_id}")
+                ),
+                InlineKeyboardButton(
+                    text=f"{get_size(file.file_size)}",
+                    callback_data=f'{pre}_#{file.file_id}',
+                ),
+            ]
+            for file in files
+        ]
+
+    btn.append(
+    [InlineKeyboardButton(text="⚡ʜᴏᴡ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ⚡", url='https://t.me/how_to_download_from_dulink/2')]
+)
+
+    
+
+
+    btn.insert(0, 
+        [
+            InlineKeyboardButton('ɢʀᴏᴜᴘ', url='https://t.me/anumitultrabots'),
+            InlineKeyboardButton('sʜᴀʀᴇ ᴍᴇ', url='https://t.me/share/url?url=%2A%2A%F0%9F%98%B1+Search+Zone%C2%B2%C2%B7%E2%81%B0+%F0%9F%98%B1+%0D%0A+%0D%0AWhatever+you+might+ask%2C+you+will+get..+%E2%9D%A4%EF%B8%8F+%0D%0A+%0D%0A%F0%9F%91%87+Join%0D%0A+https%3A%2F%2Ft.me%2Fanumitultrabots'),
+            InlineKeyboardButton('ᴄʜᴀɴɴᴇʟ', url='https://t.me/anumitultrabots')
+        ]
+    )
+    
 
         if offset != "":
             key = f"{message.chat.id}-{message.message_id}"
