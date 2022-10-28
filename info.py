@@ -30,7 +30,7 @@ COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
 LOG_CHANNEL = int(environ.get('LOG_CHANNEL', ''))
 SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'TeamEvamaria')
 
-SHORTENER_API = environ.get("SHORTENER_API", ""))
+SHORTENER_API = environ.get("SHORTENER_API", "")
 
 
 CUSTOM_FILE_CAPTION = environ.get("CUSTOM_FILE_CAPTION", None)
