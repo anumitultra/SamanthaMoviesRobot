@@ -546,8 +546,6 @@ async def auto_filter(client, message):
                      text=f"{file.file_name}",
                     url=await get_shortlink(f"https://t.me/{temp.U_NAME}?start=pre_{file.file_id}")
                 ),
-        if not btn:
-            return
 
         if offset != "":
             key = f"{message.chat.id}-{message.message_id}"
