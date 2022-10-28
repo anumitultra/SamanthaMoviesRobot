@@ -4,6 +4,7 @@ import re
 import ast
 from Script import script
 import pyrogram
+from utils import get_shortlink
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, make_inactive
 from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, URL_SHORTENR_WEBSITE, URL_SHORTNER_WEBSITE_API
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
@@ -83,16 +84,12 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"{file.file_name}", url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
-                ),
-                InlineKeyboardButton(
-                    text=f"{get_size(file.file_size)}",
-                    url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://t.me/{temp.U_NAME}?start=files_{file.file_id}'
+                    text=f"[{get_size(file.file_size)}] {file.file_name}", 
+                    url=await get_shortlink(f"https://t.me/{temp.U_NAME}?start=files_{file.file_id}")
                 ),
             ]
             for file in files
         ]
-
 
     btn.insert(0,
         [
@@ -325,7 +322,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             
         try:
             if AUTH_CHANNEL and not await is_subscribed(client, query):
-                await query.answer(url=f"https://t.me/{temp.U_NAME}?start={file_id}")
+                await get_shortlink(f"https://telegram.dog/{temp.U_NAME}?start={ident}_{file_id}")
                 return
             else:
                 await client.send_cached_media(
@@ -546,8 +543,9 @@ async def auto_filter(client, message):
                 file_id = file.file_id
                 btn.append(
                     [InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}] {file.file_name}", url=f'https://{URL_SHORTENR_WEBSITE}/st?api={URL_SHORTNER_WEBSITE_API}&url=https://telegram.me/{temp.U_NAME}?start=files_{file.file_id}')]
-                    )
+                     text=f"{file.file_name}",
+                    url=await get_shortlink(f"https://t.me/{temp.U_NAME}?start=pre_{file.file_id}")
+                ),
         if not btn:
             return
 
